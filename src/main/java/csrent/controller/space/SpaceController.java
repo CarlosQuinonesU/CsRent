@@ -83,12 +83,26 @@ public class SpaceController {
   }
 
     //Metodo para eliminar un espacio por id
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteSpace(@PathVariable Integer id) {
+//        if (service.existsById(id)) {
+//            return ResponseEntity.ok(service.delete(id));
+//        }
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id: " + id + " no corresponde a nigun espacio.");
+//    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSpace(@PathVariable Integer  id){
-        if (service.existsById(id)){
-            return ResponseEntity.ok(service.delete(id));
+    public ResponseEntity<?> deleteSpace(@PathVariable Integer id) {
+        System.out.println("[BACKEND] Eliminando espacio con ID: " + id); // ← Agrega esto
+
+        if (service.existsById(id)) {
+            service.delete(id);
+            System.out.println("[BACKEND] Espacio eliminado correctamente"); // ← Y esto
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El id: "+id+" no corresponde a nigun espacio.");
+
+        System.out.println("[BACKEND] Espacio no encontrado"); // ← Y esto
+        return ResponseEntity.notFound().build();
     }
 
     // Metodo para retornar una objeto por id
